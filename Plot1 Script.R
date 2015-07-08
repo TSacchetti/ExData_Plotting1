@@ -1,0 +1,10 @@
+download.file("https://d396qusza40orc.cloudfront.net/exdata%2Fdata%2Fhousehold_power_consumption.zip",destfile = "UCdata",method = "curl")
+unzip("UCdata")
+UC.data = read.table("household_power_consumption.txt",sep = ";",header = T,stringsAsFactors = F)
+UC.data[,1] = as.Date(UC.data[,1],format = "%d/%m/%Y")
+UCF = subset(UC.data, UC.data[,1] == "2007-02-01"|UC.data[,1] == "2007-02-02")
+UCF[,"Global_active_power"] = as.numeric(UCF[,"Global_active_power"])
+
+png(filename = "plot1.png",width = 480, height = 480)
+with(UCF ,hist(Global_active_power,col = "red",xlab = "Global Active Power (kilowatts)",main = "Global Active Power"))
+dev.off()
